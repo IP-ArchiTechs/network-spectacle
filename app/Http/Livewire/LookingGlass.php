@@ -6,6 +6,8 @@ use App\Domain\Router\Actions\ExecuteCommand;
 use App\Domain\Router\DataTransferObjects\CommandRequestData;
 use App\Domain\Router\Enums\Command;
 use App\Domain\Router\Models\Router;
+use App\Exceptions\InvalidASNException;
+use App\Exceptions\InvalidIPException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rules\Enum;
@@ -43,8 +45,10 @@ class LookingGlass extends Component
 
             array_unshift($this->outputs, ($executeCommand)($commandRequestData)->getOutput());
 
-        } catch (\ValueError $exception) {
-            $this->addError('command', 'I do not understand how to do that.');
+        } catch (InvalidIPException) {
+            $this->addError('exception', 'That is not a valid IP Address.');
+        } catch (InvalidASNException) {
+            $this->addError('exception', 'That is not a valid ASN.');
         }
     }
 
