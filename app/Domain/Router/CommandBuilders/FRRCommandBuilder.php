@@ -2,6 +2,7 @@
 
 namespace App\Domain\Router\CommandBuilders;
 
+use App\Domain\Router\Models\TargetASN;
 use App\Domain\Router\Models\TargetIP;
 
 class FRRCommandBuilder extends CommandBuilder
@@ -19,5 +20,10 @@ class FRRCommandBuilder extends CommandBuilder
         $ip = (string) $targetIP->value;
 
         return 'traceroute ' . $ip;
+    }
+
+    public function asDetail(TargetASN $targetASN): string
+    {
+        return 'vtysh -c "show bgp ipv4 regexp ' . $targetASN->value . '"';
     }
 }

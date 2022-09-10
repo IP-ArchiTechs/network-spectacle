@@ -10,13 +10,13 @@ enum Command: string
 {
     case Ping = 'Ping';
     case Traceroute = 'Traceroute';
-    case ASPath = 'AS Path';
+    case ASDetail = 'AS Detail';
 
     public function buildTarget(string $string): Target
     {
         return match ($this) {
             Command::Ping, Command::Traceroute => TargetIP::fromString($string),
-            Command::ASPath => TargetASN::fromString($string)
+            Command::ASDetail => TargetASN::fromString($string)
         };
     }
 }
