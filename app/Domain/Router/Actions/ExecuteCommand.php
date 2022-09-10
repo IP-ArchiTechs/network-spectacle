@@ -2,14 +2,20 @@
 
 namespace App\Domain\Router\Actions;
 
-use App\Domain\Router\Enums\Command;
+use App\Domain\Router\DataTransferObjects\CommandRequestData;
 use Spatie\Ssh\Ssh;
 use Symfony\Component\Process\Process;
 
 class ExecuteCommand
 {
-    public function __invoke(Command $command, $target): Process
+    public function __invoke(CommandRequestData $commandRequestData): Process
     {
-        return Ssh::create('lguser', '45.63.78.25')->execute('traceroute ' . $target);
+        $commandString = $commandRequestData
+            ->router->buildCommand($commandRequestData->command, $commandRequestData->target);
+
+        return Ssh::create(
+            $commandRequestData->router->user,
+            $commandRequestData->router->host)
+            ->execute($commandString);
     }
 }
