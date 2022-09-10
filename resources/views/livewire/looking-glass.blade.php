@@ -11,21 +11,17 @@
             </div>
         @endforeach
         <h3>Select Command</h3>
-        <div class="form-check">
-            <input wire:model="command" class="form-check-input" type="radio" name="command"
-                   id="command_ping" value="ping">
-            <label class="form-check-label" for="command_ping">
-                Ping
-            </label>
-        </div>
-        <div class="form-check">
-            <input wire:model="command" class="form-check-input" type="radio" name="command"
-                   id="command_traceroute"
-                   value="traceroute">
-            <label class="form-check-label" for="command_traceroute">
-                Traceroute
-            </label>
-        </div>
+        @foreach($commands as $command)
+            <div class="form-check">
+                <input wire:model="command" class="form-check-input" type="radio" name="command"
+                       id="command_{{$command}}" value="{{$command}}">
+                <label class="form-check-label" for="command_{{$command}}">
+                    {{$command}}
+                </label>
+            </div>
+        @endforeach
+
+
         <div class="mb-3">
             <input type="text" wire:model="target" class="form-control">
         </div>

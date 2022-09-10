@@ -8,9 +8,9 @@ use App\Domain\Router\Models\TargetIP;
 
 enum Command: string
 {
-    case Ping = 'ping';
-    case Traceroute = 'traceroute';
-    case ASPath = 'aspath';
+    case Ping = 'Ping';
+    case Traceroute = 'Traceroute';
+    case ASPath = 'AS Path';
 
     public function buildTarget(string $string): Target
     {
