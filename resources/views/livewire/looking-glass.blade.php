@@ -26,11 +26,15 @@
             <input type="text" wire:model="target" class="form-control">
         </div>
         <button class="btn btn-primary mb-3">Submit</button>
-        @error('command')
-        <div class="alert alert-danger">
-            {{ $message }}
-        </div>
-        @enderror
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </form>
     <h3>Outputs</h3>
     <div>

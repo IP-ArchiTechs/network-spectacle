@@ -8,6 +8,7 @@ use App\Domain\Router\Enums\Command;
 use App\Domain\Router\Models\Router;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
 
 class LookingGlass extends Component
@@ -27,6 +28,12 @@ class LookingGlass extends Component
     public function submit(ExecuteCommand $executeCommand)
     {
         try {
+
+            $this->validate([
+                'command' => ['required', new Enum(Command::class)],
+                'target' => ['required', 'regex:/[0-9.]/'],
+                'selected_router_id' => ['required', 'integer', 'exists:routers,id']
+            ]);
 
             $commandRequestData = CommandRequestData::fromLivewireForm(
                 $this->selected_router_id,
