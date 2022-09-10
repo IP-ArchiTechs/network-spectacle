@@ -14,14 +14,12 @@ class Router extends Model
         'platform' => Platform::class
     ];
 
-    public function buildCommand(Command $command, Target $target) {
-        return $this->getCommandBuilder()->buildCommand($command, $target);
-    }
-
-    public function getCommandBuilder(): CommandBuilder
+    public function buildCommand(Command $command, Target $target): string
     {
-        return match ($this->platform) {
+        $commandBuilder = match ($this->platform) {
             Platform::FRR => new FRRCommandBuilder()
         };
+
+        return $commandBuilder->buildCommand($command, $target);
     }
 }
