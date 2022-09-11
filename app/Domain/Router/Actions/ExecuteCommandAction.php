@@ -6,7 +6,7 @@ use App\Domain\Router\DataTransferObjects\CommandRequestData;
 use Spatie\Ssh\Ssh;
 use Symfony\Component\Process\Process;
 
-class ExecuteCommand
+class ExecuteCommandAction
 {
     public function __invoke(CommandRequestData $commandRequestData): Process
     {

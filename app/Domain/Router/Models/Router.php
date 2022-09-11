@@ -10,6 +10,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Router extends Model
 {
+    public $fillable = [
+        'name',
+        'host',
+        'port',
+        'user',
+        'platform'
+    ];
+
     protected $casts = [
         'platform' => Platform::class
     ];

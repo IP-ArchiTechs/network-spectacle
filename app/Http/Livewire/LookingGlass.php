@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Domain\Router\Actions\ExecuteCommand;
+use App\Domain\Router\Actions\ExecuteCommandAction;
 use App\Domain\Router\DataTransferObjects\CommandRequestData;
 use App\Domain\Router\Enums\Command;
 use App\Domain\Router\Models\Router;
@@ -27,7 +27,7 @@ class LookingGlass extends Component
         $this->commands = array_column(Command::cases(), 'value');
     }
 
-    public function submit(ExecuteCommand $executeCommand)
+    public function submit(ExecuteCommandAction $executeCommandAction)
     {
         try {
 
@@ -43,7 +43,7 @@ class LookingGlass extends Component
                 $this->target
             );
 
-            array_unshift($this->outputs, ($executeCommand)($commandRequestData)->getOutput());
+            array_unshift($this->outputs, ($executeCommandAction)($commandRequestData)->getOutput());
 
         } catch (InvalidIPException) {
             $this->addError('exception', 'That is not a valid IP Address.');
