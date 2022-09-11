@@ -8,6 +8,7 @@ use App\Domain\Router\Enums\Command;
 use App\Domain\Router\Models\Router;
 use App\Exceptions\InvalidASNException;
 use App\Exceptions\InvalidIPException;
+use App\Exceptions\InvalidNetworkException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rules\Enum;
@@ -49,6 +50,8 @@ class LookingGlass extends Component
             $this->addError('exception', 'That is not a valid IP Address.');
         } catch (InvalidASNException) {
             $this->addError('exception', 'That is not a valid ASN.');
+        } catch (InvalidNetworkException) {
+            $this->addError('exception', 'That is not a valid network/subnet in CIDR notation');
         }
     }
 

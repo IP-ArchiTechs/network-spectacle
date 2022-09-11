@@ -4,6 +4,7 @@ namespace App\Domain\Router\CommandBuilders;
 
 use App\Domain\Router\Models\TargetASN;
 use App\Domain\Router\Models\TargetIP;
+use App\Domain\Router\Models\TargetNetwork;
 
 class FRRCommandBuilder extends CommandBuilder
 {
@@ -12,18 +13,27 @@ class FRRCommandBuilder extends CommandBuilder
     {
         $ip = (string) $targetIP->value;
 
-        return 'ping -c 4 ' . $ip;
+        return match ($targetIP->value->getVersion()) {
+          'IPv4' => 'ping -c 4 ' . $ip,
+          'IPv6' => 'ping6 -c 4 ' . $ip
+        };
     }
 
     public function traceroute(TargetIP $targetIP): string
     {
         $ip = (string) $targetIP->value;
 
-        return 'traceroute ' . $ip;
+        return match ($targetIP->value->getVersion()) {
+            'IPv4' => 'traceroute ' . $ip,
+            'IPv6' => 'traceroute6 ' . $ip
+        };
     }
 
-    public function asDetail(TargetASN $targetASN): string
+    public function bgpRouteLookup(TargetNetwork $targetNetwork): string
     {
-        return 'vtysh -c "show bgp ipv4 regexp ' . $targetASN->value . '"';
+        return match ($targetNetwork->value->getFirstIP()->getVersion()) {
+            'IPv4' => 'vtysh -c "show ip bgp ' . $targetNetwork->value . '"',
+            'IPv6' => 'vtysh -c "show bgp ipv6 unicast ' . $targetNetwork->value . '"'
+        };
     }
 }
