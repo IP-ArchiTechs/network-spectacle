@@ -2,7 +2,6 @@
 
 namespace App\Domain\Router\CommandBuilders;
 
-use App\Domain\Router\Models\TargetASN;
 use App\Domain\Router\Models\TargetIP;
 use App\Domain\Router\Models\TargetNetwork;
 
