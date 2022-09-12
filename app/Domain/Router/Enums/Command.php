@@ -3,7 +3,6 @@
 namespace App\Domain\Router\Enums;
 
 use App\Domain\Router\Models\Target;
-use App\Domain\Router\Models\TargetASN;
 use App\Domain\Router\Models\TargetIP;
 use App\Domain\Router\Models\TargetNetwork;
 
