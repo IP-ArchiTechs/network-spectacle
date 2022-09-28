@@ -2,6 +2,7 @@
 
 namespace App\Domain\Router\CommandBuilders;
 
+use App\Domain\Router\Models\Target;
 use App\Domain\Router\Models\TargetIP;
 use App\Domain\Router\Models\TargetNetwork;
 
@@ -28,11 +29,23 @@ class FRRCommandBuilder extends CommandBuilder
         };
     }
 
-    public function bgpRouteLookup(TargetNetwork $targetNetwork): string
+    public function bgpRouteLookup(Target $target): string
     {
-        return match ($targetNetwork->value->getFirstIP()->getVersion()) {
-            'IPv4' => 'vtysh -c "show ip bgp ipv4 ' . $targetNetwork->value . '"',
-            'IPv6' => 'vtysh -c "show bgp ipv6 unicast ' . $targetNetwork->value . '"'
-        };
+
+        if (is_a($target, TargetIP::class)) {
+            return match ($target->value->getVersion()) {
+                'IPv4' => 'vtysh -c "show ip bgp ipv4 ' . $target->value . '"',
+                'IPv6' => 'vtysh -c "show bgp ipv6 unicast ' . $target->value . '"'
+            };
+        }
+
+        if (is_a($target, TargetNetwork::class)) {
+            return match ($target->value->getFirstIP()->getVersion()) {
+                'IPv4' => 'vtysh -c "show ip bgp ipv4 ' . $target->value . '"',
+                'IPv6' => 'vtysh -c "show bgp ipv6 unicast ' . $target->value . '"'
+            };
+        }
+
+        return "";
     }
 }

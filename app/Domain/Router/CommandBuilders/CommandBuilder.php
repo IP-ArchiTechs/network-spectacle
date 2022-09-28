@@ -21,5 +21,5 @@ abstract class CommandBuilder {
 
     abstract public function ping(TargetIP $targetIP): string;
     abstract public function traceroute(TargetIP $targetIP): string;
-    abstract public function bgpRouteLookup(TargetNetwork $targetNetwork): string;
+    abstract public function bgpRouteLookup(TargetNetwork $target): string;
 }

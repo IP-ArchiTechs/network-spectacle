@@ -9,5 +9,11 @@ abstract class Target
 {
     public IP|Network|int $value;
 
-    abstract public static function fromString(string $string);
+    public static function fromString(string $string): Target {
+        if (str_contains($string, '/')) {
+            return TargetNetwork::fromString($string);
+        } else {
+            return TargetIP::fromString($string);
+        }
+    }
 }

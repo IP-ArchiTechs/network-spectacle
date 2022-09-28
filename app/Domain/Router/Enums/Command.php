@@ -16,7 +16,7 @@ enum Command: string
     {
         return match ($this) {
             Command::Ping, Command::Traceroute => TargetIP::fromString($string),
-            Command::BGPRouteLookup => TargetNetwork::fromString($string)
+            Command::BGPRouteLookup => Target::fromString($string)
         };
     }
 }
