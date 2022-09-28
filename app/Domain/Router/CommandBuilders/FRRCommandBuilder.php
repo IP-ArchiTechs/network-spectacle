@@ -31,7 +31,7 @@ class FRRCommandBuilder extends CommandBuilder
     public function bgpRouteLookup(TargetNetwork $targetNetwork): string
     {
         return match ($targetNetwork->value->getFirstIP()->getVersion()) {
-            'IPv4' => 'vtysh -c "show ip bgp ' . $targetNetwork->value . '"',
+            'IPv4' => 'vtysh -c "show ip bgp ipv4 ' . $targetNetwork->value . '"',
             'IPv6' => 'vtysh -c "show bgp ipv6 unicast ' . $targetNetwork->value . '"'
         };
     }
