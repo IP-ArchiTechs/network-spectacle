@@ -10,7 +10,7 @@ enum Command: string
 {
     case Ping = 'Ping';
     case Traceroute = 'Traceroute';
-    case BGPRouteLookup = 'BGP Router Lookup';
+    case BGPRouteLookup = 'BGP Route Lookup';
 
     public function buildTarget(string $string): Target
     {
